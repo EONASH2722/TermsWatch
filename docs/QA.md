@@ -4,7 +4,7 @@ Validation updated: **24 September 2026**. This report separates automated/build
 
 ## Release gate
 
-**Full cross-platform demo sign-off: NOT COMPLETE.** The release artifacts build, desktop document/Ask/OCR flows work, and the connected Android phone now passes the core document flow. The following still need manual checks:
+**Full cross-platform demo sign-off: NOT COMPLETE.** The release artifacts build and the desktop/public-site document, Ask and OCR flows work. An earlier Android build passed the core document flow on a physical phone; the latest answer-quality APK still needs its own device retest. The following still need manual checks:
 
 1. Camera/multi-page capture, real third-party Share targets, shared URL handling, and the optional local model have not yet been exercised on the phone. A synthetic warm-start Android PDF `ACTION_SEND` did succeed.
 2. Only the in-app browser is connected. It cannot exercise a real Chrome/Edge extension side panel and its active-tab permissions. Web extraction/highlighting have automated coverage; actual loaded-extension/MV3 and optional-model-in-extension QA remain pending.
@@ -15,7 +15,7 @@ No OS virtualization settings, security controls, user browser installations, or
 
 | Check | Result |
 | --- | --- |
-| `npm test` | **PASS: 52 tests, 19 files**; includes stalled-cache/model fallback, synonym retrieval, irrelevant-citation rejection, specific explanations and recent-scan display coverage |
+| `npm test` | **PASS: 54 tests, 19 files**; includes stalled-cache/model fallback, synonym retrieval, irrelevant-citation/heading rejection, specific explanations and recent-scan display coverage |
 | `npm run typecheck` | PASS |
 | `npm run lint` | PASS |
 | `npm run build` | PASS; large-chunk warning from bundled PDF/ML runtime, not a build error |
@@ -46,7 +46,7 @@ The production website is live at **https://eonash2722.github.io/TermsWatch/** t
 - PASS: security-patched PDF.js 6.2.108 with paired legacy API/worker re-tested using text and image-only PDFs: seven findings, visible original text-PDF highlights, OCR around 96% on the fictional scan and source access.
 - PASS: no relevant console errors/warnings or framework overlay in these flows.
 - PASS (24 September): narrow website result cards show actual source-specific facts, and Ask shows a grounded answer with a separate verified source after the retrieval update. Three fictional-demo screenshots are in `docs/screenshots/`.
-- PASS (24 September): published site loaded over HTTPS and its demo policy/results/Ask controls worked in the in-app browser. A live ban-question check revealed an unrelated cancellation citation; the retrieval gate was tightened and a regression test added. This final correction must be rechecked on the published site after the next deployment.
+- PASS (24 September): published site loaded over HTTPS and its demo policy/results/Ask controls worked in the in-app browser. Live checks exposed an unrelated cancellation citation and then an untagged section heading being cited; both were fixed and covered by regressions. The final published build answered the exact screenshot question from a pasted copy of that clause with only its verified sentence, listing breaches, service changes and legal requirements. An unsupported specific cause refused; renewal still cited its 48-hour source. No browser errors were observed.
 
 Website primary workflow is publicly testable now. This does **not** certify every browser, an installed extension, or the Android device workflows.
 
@@ -80,7 +80,7 @@ Production builds were exercised in a local browser preview using the visible co
 
 Connected device: OnePlus Nord AC2001, Android 12/API 31, Android System WebView 154. Tests below ran in the phone's current main profile using v1.0.0 debug builds. Updates were installed with `adb install -r`, preserving app data. The app had originally been installed only in a separate Guest profile; it was enabled for the main profile without touching Guest data. The reported Guest-profile spinner is not claimed as reproduced or fixed in that profile.
 
-The previous v1.0.0 APK was reinstalled in place on 23 September after the polish changes. A fresh launch, built-in demo and Ask check completed again on the connected phone; the answer included the 48-hour quotation and verified source, without the earlier endless spinner. This smoke test did not repeat camera or third-party Share flows. The 24 September retrieval/answer-quality build has **not** been installed or tested on the phone because ADB currently lists no connected device.
+The previous v1.0.0 APK was reinstalled in place on 23 September after the polish changes. A fresh launch, built-in demo and Ask check completed again on the connected phone; the answer included the 48-hour quotation and verified source, without the earlier endless spinner. This smoke test did not repeat camera or third-party Share flows. The 24 September retrieval/answer-quality build has **not** been installed or tested on the phone because ADB currently lists no connected physical device. The existing `TermsWatch_QA` emulator could not start because this PC lacks the Android Emulator hypervisor driver; no machine settings were changed to work around it.
 
 Two real Android issues were found and corrected during this pass: returning from the system file picker could race with an empty Share-inbox check, silently dropping the selected file; and Android expanded `eng.traineddata.gz` to `eng.traineddata` inside the APK, causing a 404 and stalled image OCR. Both fixes were re-tested on the physical device. Local cache writes/reads and optional-model answers now have bounded fallbacks, so a stalled optional service cannot hold the result or Ask button indefinitely.
 

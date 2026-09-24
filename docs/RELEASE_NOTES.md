@@ -31,6 +31,7 @@
 - Synonym-aware Ask retrieval handles account-ban/suspension wording and boosts verified clause categories without treating an absent specific cause as evidence.
 - Finding cards and summaries now use the matched clause's facts; a payment finding cites its payment sentence rather than a neighbouring cancellation sentence.
 - Recognized Ask intents exclude unrelated clauses that share common words such as “account”; a live-site ban question no longer carries a cancellation citation in the tested retrieval path.
+- Account-ban retrieval requires a source sentence about suspension, termination or lost access; an untagged section heading alone is not cited as a cause.
 
 ## Main new files
 
