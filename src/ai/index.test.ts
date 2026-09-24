@@ -48,4 +48,10 @@ describe('provider fallback', () => {
     expect(answer.sources[0]).toMatchObject({ sourceBlockId: 'spotify-termination', evidenceText: spotifyBlocks[0].text });
     expect((await answerDocumentQuestion('Can I be banned for wearing red socks?', spotifyBlocks)).status).toBe('insufficient');
   });
+  it('does not include account settings cancellation in a ban answer', async () => {
+    const answer = await answerDocumentQuestion('What can cause my account to get banned?', demoPolicyBlocks);
+    expect(answer.status).toBe('answered');
+    expect(answer.sources.map((source) => source.sourceBlockId)).toEqual(['demo-termination']);
+    expect(answer.answer).not.toMatch(/cancel|billing/i);
+  });
 });

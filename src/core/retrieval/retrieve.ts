@@ -70,6 +70,9 @@ export function retrieveBlocks(question: string, blocks: DocumentBlock[], limit 
     const categoryMatch = matchedIntents.length > 0;
     // A broad category must not answer a question about an absent specific fact.
     if (specific.length >= 2 && specificMatches < Math.ceil(specific.length / 2)) return { block, score: 0 };
+    // When the question names a clause type, shared words such as "account" or
+    // "subscription" are not enough to make a different clause an answer.
+    if (intents.length > 0 && !categoryMatch) return { block, score: 0 };
     if (!categoryMatch && matched.length / original.length < 0.5) return { block, score: 0 };
     let score = 0;
     for (const token of expanded) {

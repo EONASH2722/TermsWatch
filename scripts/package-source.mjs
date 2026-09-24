@@ -24,7 +24,7 @@ async function add(path) {
   }
 }
 
-for (const name of ['src', 'public', 'scripts', 'docs', 'fixtures', '.github', 'apps/android', '.gitignore', 'LICENSE', 'README.md', 'package.json', 'package-lock.json', 'index.html', 'capacitor.config.ts', 'eslint.config.js', 'postcss.config.js', 'tailwind.config.ts', 'tsconfig.json', 'vite.config.ts']) {
+for (const name of ['src', 'public', 'scripts', 'docs', 'fixtures', '.github', 'apps/android', '.gitattributes', '.gitignore', 'LICENSE', 'README.md', 'package.json', 'package-lock.json', 'index.html', 'capacitor.config.ts', 'eslint.config.js', 'postcss.config.js', 'tailwind.config.ts', 'tsconfig.json', 'vite.config.ts']) {
   await add(join(root, name));
 }
 await mkdir(release, { recursive: true });

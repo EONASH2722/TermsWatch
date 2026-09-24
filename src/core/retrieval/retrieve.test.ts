@@ -22,6 +22,7 @@ describe('retrieval before generation', () => {
   it('maps account bans to suspension while refusing an unsupported specific cause', () => {
     expect(retrieveBlocks('What all can cause my Spotify account to get banned?', spotifyBlocks)[0]?.block.id).toBe('spotify-termination');
     expect(retrieveBlocks('What all can cause my account to get banned?', spotifyBlocks)[0]?.block.id).toBe('spotify-termination');
+    expect(retrieveBlocks('What can cause my account to get banned?', demoPolicyBlocks).map(({ block }) => block.id)).toEqual(['demo-termination']);
     expect(retrieveBlocks('Can my account be banned for wearing red socks?', spotifyBlocks)).toEqual([]);
   });
   it('recognizes common legal-query synonyms', () => {

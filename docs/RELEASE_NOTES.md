@@ -30,6 +30,7 @@
 - Shipped bundles omit source maps while retaining required third-party license notices.
 - Synonym-aware Ask retrieval handles account-ban/suspension wording and boosts verified clause categories without treating an absent specific cause as evidence.
 - Finding cards and summaries now use the matched clause's facts; a payment finding cites its payment sentence rather than a neighbouring cancellation sentence.
+- Recognized Ask intents exclude unrelated clauses that share common words such as “account”; a live-site ban question no longer carries a cancellation citation in the tested retrieval path.
 
 ## Main new files
 
@@ -41,6 +42,6 @@
 
 ## Distribution
 
-`release/TermsWatch-v1.0.0-extension.zip`, `release/TermsWatch-v1.0.0-website.zip`, `release/TermsWatch-v1.0.0-source.zip`, `release/TermsWatch-v1.0.0-debug.apk`, and `release/SHA256SUMS.txt`. The APK is debug-signed for demonstration, not store submission. Model weights are downloaded only on opt-in and are not inside these artifacts. The website is not automatically published by a local build.
+`release/TermsWatch-v1.0.0-extension.zip`, `release/TermsWatch-v1.0.0-website.zip`, `release/TermsWatch-v1.0.0-source.zip`, `release/TermsWatch-v1.0.0-debug.apk`, and `release/SHA256SUMS.txt`. The APK is debug-signed for demonstration, not store submission. Model weights are downloaded only on opt-in and are not inside these artifacts. GitHub Pages publishes the website from `main` after the workflow's checks pass; a local build alone does not publish it.
 
-The core Android demo, Ask, PDF import and OCR flows passed on a connected phone. Camera, real third-party Share and installed-extension behavior still need the manual checks in `QA.md`.
+The earlier core Android demo, Ask, PDF import and OCR flows passed on a connected phone. The latest answer-quality APK still needs an in-place phone retest. Camera, real third-party Share and installed-extension behavior also need the manual checks in `QA.md`.
