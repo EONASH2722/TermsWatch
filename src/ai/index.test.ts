@@ -54,4 +54,13 @@ describe('provider fallback', () => {
     expect(answer.sources.map((source) => source.sourceBlockId)).toEqual(['demo-termination']);
     expect(answer.answer).not.toMatch(/cancel|billing/i);
   });
+  it('does not cite a pasted section heading as a second ban cause', async () => {
+    const blocks: DocumentBlock[] = [
+      { id: 'heading', order: 0, text: '5. Rules, suspension & termination' },
+      { id: 'clause', order: 1, text: spotifyBlocks[0].text },
+    ];
+    const answer = await answerDocumentQuestion('What all can cause my Spotify account to get banned', blocks);
+    expect(answer.sources.map((source) => source.sourceBlockId)).toEqual(['clause']);
+    expect(answer.answer).toMatch(/breaches.*service changes.*legal requirements/is);
+  });
 });

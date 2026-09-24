@@ -25,6 +25,13 @@ describe('retrieval before generation', () => {
     expect(retrieveBlocks('What can cause my account to get banned?', demoPolicyBlocks).map(({ block }) => block.id)).toEqual(['demo-termination']);
     expect(retrieveBlocks('Can my account be banned for wearing red socks?', spotifyBlocks)).toEqual([]);
   });
+  it('does not treat an untagged section heading as ban evidence', () => {
+    const pasted: DocumentBlock[] = [
+      { id: 'heading', order: 0, text: '5. Rules, suspension & termination' },
+      { id: 'clause', order: 1, text: spotifyBlocks[0].text },
+    ];
+    expect(retrieveBlocks('What all can cause my Spotify account to get banned?', pasted).map(({ block }) => block.id)).toEqual(['clause']);
+  });
   it('recognizes common legal-query synonyms', () => {
     const clauses: DocumentBlock[] = [
       { id: 'cancel', order: 0, text: 'Cancellation must be requested before the next billing date.' },
